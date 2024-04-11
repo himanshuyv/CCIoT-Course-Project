@@ -26,7 +26,7 @@ void loop() {
   Serial.println(current1);
   Serial.println(current2);
   sendToThingSpeak(current1, current2);
-  delay(2000); 
+  delay(2000); // Adjust the delay as needed to fit ThingSpeak's rate limit
 }
 
 void connectToWiFi() {
@@ -57,21 +57,18 @@ float readCurrent(int sensorPin) {
 }
 
 void sendToThingSpeak(float current1, float current2) {
-  String dataString1 = String(current1);
-  String dataString2 = String(current2);
-  String topic1 = "channels/" + String(CHANNEL_ID) + "/publish/fields/field1";
-  String topic2 = "channels/" + String(CHANNEL_ID) + "/publish/fields/field2";
-
-  if (mqttClient.publish(topic1.c_str(), dataString1.c_str())) {
-    Serial.println("Current 1 published successfully");
+  if (client.connect(server, 80)) {
+    String postData = String("api_key=") + API_KEY + "&field1=" + String(current1) + "&field2=" + String(current2);
+    client.println("POST /update HTTP/1.1");
+    client.println("Host: api.thingspeak.com");
+    client.println("Connection: close");
+    client.println("Content-Type: application/x-www-form-urlencoded");
+    client.println("Content-Length: " + String(postData.length()));
+    client.println();
+    client.println(postData);
   } else {
-    Serial.println("Failed to publish Current 1");
+    Serial.println("Connection to ThingSpeak failed.");
   }
 
-  if (mqttClient.publish(topic2.c_str(), dataString2.c_str())) {
-    Serial.println("Current 2 published successfully");
-  } else {
-    Serial.println("Failed to publish Current 2");
-  }
+  delay(20); // Adjust the delay as needed to fit ThingSpeak's rate limit
 }
-

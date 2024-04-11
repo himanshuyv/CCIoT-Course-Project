@@ -56,16 +56,15 @@ void connectToWiFi() {
 float readCurrent(int sensorPin) {
   float rms=0;
   float sensorvalue;
-  for(int i=0;i<1000;i++)
+  for(int i=0;i<500;i++)
   {
     sensorvalue=analogRead(sensorPin);
     sensorvalue=sensorvalue*5/1023;
     rms=rms+sensorvalue*sensorvalue;
     delay(1);
-
   }
   rms = 2*rms; 
-  rms=rms/1000;
+  rms=rms/500;
   rms=sqrt(rms);
   rms=rms/0.06667;
   return rms;
@@ -78,9 +77,13 @@ void reconnect() {
       Serial.println("connected");
     } else {
       Serial.print("failed, rc=");
-      Serial.print(mqttClient.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
+      Serial.println(mqttClient.state());
+      if (mqttClient.state()==-2){
+        connectToWiFi();
+      }else{
+        Serial.println("try again in 5 seconds");
+        delay(5000);
+      }
     }
   }
 }
@@ -89,17 +92,18 @@ void sendToThingSpeak(float current1, float current2) {
   String dataString1 = String(current1);
   String dataString2 = String(current2);
   String topic1 = "channels/" + String(CHANNEL_ID) + "/publish/fields/field1";
-  String dataString = dataString1 + "field2" + dataString2;
-  if (mqttClient.publish(topic1.c_str(), dataString.c_str())) {
+  String topic2 = "channels/" + String(CHANNEL_ID) + "/publish/fields/field2";
+
+  if (mqttClient.publish(topic1.c_str(), dataString1.c_str())) {
     Serial.println("Current 1 published successfully");
   } else {
     Serial.println("Failed to publish Current 1");
   }
-  // delay(1000);
-  // String topic2 = "channels/" + String(CHANNEL_ID) + "/publish/fields/field2";
-  // if (mqttClient.publish(topic2.c_str(), dataString2.c_str())) {
-  //   Serial.println("Current 2 published successfully");
-  // } else {
-  //   Serial.println("Failed to publish Current 2");
-  // }
+  delay(2000);
+  if (mqttClient.publish(topic2.c_str(), dataString2.c_str())) {
+    Serial.println("Current 2 published successfully");
+  } else {
+    Serial.println("Failed to publish Current 2");
+  }
 }
+
