@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 1900; // Number of latest entries to fetch
+    const results = 2; // Number of latest entries to fetch
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to determine device status
     function determineDeviceStatus(average) {
-        return average < 0.1 ? 'Off' : 'On';
+        return average < 1 ? 'Off' : 'On';
     }
 
     // Function to display device status
@@ -96,6 +96,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial fetch
     fetchData();
 
-    // Fetch data every 30 seconds (adjust as needed)
     setInterval(fetchData, 5000);
 });
