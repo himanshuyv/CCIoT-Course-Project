@@ -2,8 +2,8 @@
 #include <WiFiNINA.h>
 #include <PubSubClient.h>
 
-#define WIFI_SSID "RedmiK"
-#define WIFI_PASSWORD "password"
+#define WIFI_SSID "JioFi3_8AD7D9"
+#define WIFI_PASSWORD "66em6fze6e"
 #define MQTT_SERVER "mqtt3.thingspeak.com"
 #define MQTT_PORT 1883
 #define MQTT_USERNAME "Bxs3PSghAxEbLhMwHSY0PAk"

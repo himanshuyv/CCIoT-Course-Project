@@ -23,13 +23,15 @@ h1 {
 .plot-container {
   width: 45%; /* Adjusted width */
   padding: 2.5%; /* Added padding */
-  background-color: #333333; /* Dark plot container background color */
   height: 80vh; /* Adjusted height */
 }
 
 .device-status {
-  margin-top: 20px;
-  font-size: 18px;
+  padding: 20px;
+  font-size: 35px;
+  margin-bottom: 20px;
+
+
 }
 
 .device-status:nth-child(even) {
