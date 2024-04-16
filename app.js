@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayDeviceStatus(status, deviceNumber) {
         const statusContainer = document.getElementById(`device-status${deviceNumber}`);
         if (statusContainer) {
-            statusContainer.textContent = `Device ${deviceNumber} Status: ${status}`;
+            statusContainer.textContent = `Washing Machine ${deviceNumber} Status: ${status}`;
             statusContainer.style.color = status === 'Off' ? 'red' : 'green';
         }
     }
