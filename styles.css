@@ -30,10 +30,30 @@ h1 {
   padding: 20px;
   font-size: 35px;
   margin-bottom: 20px;
-
-
 }
 
 .device-status:nth-child(even) {
   margin-left: auto;
+}
+
+/* #plot-container1 {
+  float: left; 
+}
+
+#plot-container2 {
+  float: right; 
+} */
+
+
+@media screen and (max-width: 768px) {
+  .plots {
+    flex-direction: column;
+    gap: 20vh;
+  }
+
+  .plot-container {
+    width: 100%;
+    height: 80vh;
+  }
+  
 }
