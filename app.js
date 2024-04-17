@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const deviceStatus1 = determineDeviceStatus(validField1Data);
             const deviceStatus2 = determineDeviceStatus(validField2Data);
 
-            displayDeviceStatus(deviceStatus1, 1);
-            displayDeviceStatus(deviceStatus2, 2);
+            displayDeviceStatus(deviceStatus1, 4);
+            displayDeviceStatus(deviceStatus2, 3);
 
-            plotData(validField1Data, 'Current in Washing Machine 1', 'plot-container1');
-            plotData(validField2Data, 'Current in Washing Machine 2', 'plot-container2');
+            plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
+            plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
           })
           .catch(error => console.error('Error fetching data:', error));
     }
@@ -51,6 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 flag = 0;
                 break;
             }
+        }
+        let count = 0;
+        for (let i = 0; i < validFieldData.length; i++) {
+            if (validFieldData[i].y >= 0.05) {
+                count++;
+            }
+        }
+        if (count < validFieldData.length / 2) {
+            flag = 0;
         }
         if (flag === 1) {
             return 'On';
