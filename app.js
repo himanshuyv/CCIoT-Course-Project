@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 50; 
+    const results = 20; 
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
            
-            const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
-            const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
+            // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
+            // const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
             
 
-            const deviceStatus1 = determineDeviceStatus(validField1Data[validField1Data.length - 1].y);
-            const deviceStatus2 = determineDeviceStatus(validField2Data[validField2Data.length - 1].y);
+            const deviceStatus1 = determineDeviceStatus(validField1Data);
+            const deviceStatus2 = determineDeviceStatus(validField2Data);
 
             displayDeviceStatus(deviceStatus1, 1);
             displayDeviceStatus(deviceStatus2, 2);
@@ -44,8 +44,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return data.reduce((acc, curr) => acc + curr, 0) / data.length;
     }
 
-    function determineDeviceStatus(average) {
-        return average < 1 ? 'Off' : 'On';
+    function determineDeviceStatus(validFieldData) {
+        let flag = 1;
+        for (let i = 0; i < validFieldData.length; i++) {
+            if (validFieldData[i].y < 0.05) {
+                flag = 0;
+                break;
+            }
+        }
+        if (flag === 1) {
+            return 'On';
+        } else {
+            return 'Off';
+        }
     }
 
     function displayDeviceStatus(status, deviceNumber) {
