@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (countl == 0) {
             flag = 1;
         }else{
-            if (countg/countl > 1.5) {
+            let templ = validFieldData.length - (validFieldData.length - countl - countg);
+            if (countg/templ > 0.9) {
                 flag = 1;
             }
         }
