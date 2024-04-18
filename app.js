@@ -46,19 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function determineDeviceStatus(validFieldData) {
         let flag = 1;
-        for (let i = 0; i < validFieldData.length; i++) {
-            if (validFieldData[i].y < 0.05) {
-                flag = 0;
-                break;
-            }
-        }
         let count = 0;
         for (let i = 0; i < validFieldData.length; i++) {
             if (validFieldData[i].y > 0.05) {
                 count++;
             }
         }
-        if (count < validFieldData.length / 2) {
+        if (count/validFieldData.length < 0.8) {
             flag = 0;
         }
         if (flag === 1) {
