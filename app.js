@@ -45,15 +45,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function determineDeviceStatus(validFieldData) {
-        let flag = 1;
-        let count = 0;
+        let flag = 0;
+        let countg = 0;
+        let countl = 0;
         for (let i = 0; i < validFieldData.length; i++) {
             if (validFieldData[i].y > 0.05) {
-                count++;
+                countg++;
+            }
+            if (validFieldData[i].y < 0.05) {
+                countl++;
             }
         }
-        if (count/validFieldData.length < 0.8) {
-            flag = 0;
+        if (countl == 0) {
+            flag = 1;
+        }else{
+            if (countg/countl > 1.5) {
+                flag = 1;
+            }
         }
         if (flag === 1) {
             return 'On';
