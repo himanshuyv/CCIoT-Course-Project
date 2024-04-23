@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 30; 
+    const results = 34560; 
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -19,17 +19,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: parseFloat(feed.field2)
             }));
 
-            console.log(validField1Data[validField1Data.length - 1]);
-            console.log(validField2Data[validField2Data.length - 1]);
-
-
-           
+            
+            // pick last 10 data points from each validFieldData
+            const last15Field1Data = validField1Data.slice(-15);
+            const last15Field2Data = validField2Data.slice(-15);
+            
+            
             // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
             // const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
             
+            console.log(last15Field1Data);
+            console.log(last15Field2Data);
 
-            const deviceStatus1 = determineDeviceStatus(validField1Data);
-            const deviceStatus2 = determineDeviceStatus(validField2Data);
+            const deviceStatus1 = determineDeviceStatus(last15Field1Data);
+            const deviceStatus2 = determineDeviceStatus(last15Field2Data);
 
             displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
@@ -45,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function determineDeviceStatus(validFieldData) {
-        let flag = 0;
+        let flag = 1;
         let countg = 0;
         let countl = 0;
         for (let i = 0; i < validFieldData.length; i++) {
@@ -56,12 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 countl++;
             }
         }
-        if (countl == 0) {
-            flag = 1;
+        if (countl!=0){
+            flag = 0;
         }else{
-            let templ = validFieldData.length - (validFieldData.length - countl - countg);
-            if (countg/templ > 0.9) {
-                flag = 1;
+            if (countg/validFieldData.length<0.8){
+                flag = 0;
             }
         }
         if (flag === 1) {
