@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const deviceStatus1 = determineDeviceStatus(last15Field1Data);
             const deviceStatus2 = determineDeviceStatus(last15Field2Data);
 
-            displayDeviceStatus(deviceStatus1, 5);
+            displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
 
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
