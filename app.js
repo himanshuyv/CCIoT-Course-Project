@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayDeviceStatus(deviceStatus2, 3);
 
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
-            plotData(validField1Data, 'Current in Washing Machine 5', 'plot-container4');
+            plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
           })
           .catch(error => console.error('Error fetching data:', error));
     }
