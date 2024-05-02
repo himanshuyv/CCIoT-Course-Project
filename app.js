@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 34560; 
+    const results = 10000; 
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -27,18 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
             // const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
-            
-            console.log(last15Field1Data);
-            console.log(last15Field2Data);
 
             const deviceStatus1 = determineDeviceStatus(last15Field1Data);
             const deviceStatus2 = determineDeviceStatus(last15Field2Data);
 
-            displayDeviceStatus(deviceStatus1, 4);
+            displayDeviceStatus(deviceStatus1, 5);
             displayDeviceStatus(deviceStatus2, 3);
 
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
-            plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
+            plotData(validField1Data, 'Current in Washing Machine 5', 'plot-container4');
           })
           .catch(error => console.error('Error fetching data:', error));
     }
@@ -87,11 +84,12 @@ document.addEventListener('DOMContentLoaded', function() {
             title: name,
             xaxis: {
                 title: 'Timestamp (UTC)',
-                color: '#ffffff'
+                color: '#ffffff',
             },
             yaxis: {
                 title: 'Current (rms in A)',
-                color: '#ffffff'
+                color: '#ffffff',
+                range: [0, 4]
             },
             plot_bgcolor: '#1f1f1f',
             paper_bgcolor: '#1f1f1f',
@@ -107,11 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
             y: data.map(feed => feed.y),
             mode: 'lines+markers'
         };
-
         Plotly.newPlot(containerId, [trace], layout, config);
     }
-
-
 
 
     fetchData();
