@@ -21,8 +21,7 @@ PubSubClient mqttClient(wifiClient);
 void setup() {
   Serial.begin(9600);
   delay(1000);
-  Serial.println();
-
+  analogReference(INTERNAL);
   connectToWiFi();
   mqttClient.setServer(MQTT_SERVER, MQTT_PORT);
 }
@@ -59,7 +58,7 @@ float readCurrent(int sensorPin) {
   for(int i=0;i<500;i++)
   {
     sensorvalue=analogRead(sensorPin);
-    sensorvalue=sensorvalue*5/1023;
+    sensorvalue=sensorvalue*(1.1)/1023.0;
     rms=rms+sensorvalue*sensorvalue;
     delay(1);
   }

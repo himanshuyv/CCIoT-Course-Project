@@ -49,10 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let countg = 0;
         let countl = 0;
         for (let i = 0; i < validFieldData.length; i++) {
-            if (validFieldData[i].y > 0.05) {
+            if (validFieldData[i].y > 0.15) {
                 countg++;
             }
-            if (validFieldData[i].y < 0.05) {
+            if (validFieldData[i].y < 0.15) {
                 countl++;
             }
         }
