@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
             // const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
 
-            const deviceStatus1 = determineDeviceStatus(last15Field1Data);
-            const deviceStatus2 = determineDeviceStatus(last15Field2Data);
+            const deviceStatus1 = determineDeviceStatus(last15Field1Data,0.15);
+            const deviceStatus2 = determineDeviceStatus(last15Field2Data,0.14);
 
             displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
@@ -44,15 +44,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return data.reduce((acc, curr) => acc + curr, 0) / data.length;
     }
 
-    function determineDeviceStatus(validFieldData) {
+    function determineDeviceStatus(validFieldData, threshold) {
         let flag = 1;
         let countg = 0;
         let countl = 0;
         for (let i = 0; i < validFieldData.length; i++) {
-            if (validFieldData[i].y > 0.15) {
+            if (validFieldData[i].y > threshold) {
                 countg++;
             }
-            if (validFieldData[i].y < 0.15) {
+            if (validFieldData[i].y < threshold) {
                 countl++;
             }
         }
