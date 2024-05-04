@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (countl!=0){
             flag = 0;
         }else{
-            if (countg/validFieldData.length<0.9){
+            if (countg/validFieldData.length<0.6){
                 flag = 0;
             }
         }
