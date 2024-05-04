@@ -20,15 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }));
 
             
-            const last15Field1Data = validField1Data.slice(-5);
-            const last15Field2Data = validField2Data.slice(-5);
-            
-            
-            // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
-            // const field2Average = calculateAverage(validField2Data.map(feed => feed.y));
+            const last5Field1Data = validField1Data.slice(-5);
+            const last5Field2Data = validField2Data.slice(-5);
 
-            const deviceStatus1 = determineDeviceStatus(last15Field1Data,0.15);
-            const deviceStatus2 = determineDeviceStatus(last15Field2Data,0.14);
+            console.log(last5Field1Data);
+            console.log(last5Field2Data);
+
+            const deviceStatus1 = determineDeviceStatus(last5Field1Data,0.15);
+            const deviceStatus2 = determineDeviceStatus(last5Field2Data,0.14);
 
             displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             yaxis: {
                 title: 'Current (rms in A)',
                 color: '#ffffff',
-                range: [0, 4]
+                range: [0, 6]
             },
             plot_bgcolor: '#1f1f1f',
             paper_bgcolor: '#1f1f1f',
