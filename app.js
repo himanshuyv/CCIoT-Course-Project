@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }));
 
             
-            // pick last 10 data points from each validFieldData
-            const last15Field1Data = validField1Data.slice(-15);
-            const last15Field2Data = validField2Data.slice(-15);
+            const last15Field1Data = validField1Data.slice(-5);
+            const last15Field2Data = validField2Data.slice(-5);
             
             
             // const field1Average = calculateAverage(validField1Data.map(feed => feed.y));
@@ -45,28 +44,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function determineDeviceStatus(validFieldData, threshold) {
-        let flag = 1;
         let countg = 0;
         let countl = 0;
         for (let i = 0; i < validFieldData.length; i++) {
             if (validFieldData[i].y > threshold) {
                 countg++;
             }
-            if (validFieldData[i].y < threshold) {
+            if (validFieldData[i].y <= threshold) {
                 countl++;
             }
         }
-        if (countl!=0){
-            flag = 0;
-        }else{
-            if (countg/validFieldData.length<0.6){
-                flag = 0;
-            }
-        }
-        if (flag === 1) {
-            return 'On';
+        if (countg > countl) {
+            return "On";
         } else {
-            return 'Off';
+            return "Off";
         }
     }
 
