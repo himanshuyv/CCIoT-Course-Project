@@ -45,15 +45,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function determineDeviceStatus(validFieldData, threshold) {
         let countg = 0;
         let countl = 0;
+        let counte = 0;
         for (let i = 0; i < validFieldData.length; i++) {
             if (validFieldData[i].y > threshold) {
                 countg++;
             }
-            if (validFieldData[i].y <= threshold) {
+            if (validFieldData[i].y < threshold) {
                 countl++;
             }
+            if (validFieldData[i].y === threshold) {
+                counte++;
+            }
+
         }
-        if (countg > countl) {
+        if (countl !== 0){
+            return "Off";
+        }else if (countg > counte) {
             return "On";
         } else {
             return "Off";
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var trace = {
             x: data.map(feed => feed.x),
             y: data.map(feed => feed.y),
-            mode: 'lines+markers'
+            mode: 'lines'
         };
         Plotly.newPlot(containerId, [trace], layout, config);
     }
