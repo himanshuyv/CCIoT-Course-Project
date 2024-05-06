@@ -43,36 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function determineDeviceStatus(validFieldData, threshold) {
-        let countg = 0;
-        let countl = 0;
-        let counte = 0;
-        for (let i = 0; i < validFieldData.length; i++) {
-            if (validFieldData[i].y > threshold) {
-                countg++;
-            }
-            if (validFieldData[i].y < threshold) {
-                countl++;
-            }
-            if (validFieldData[i].y === threshold) {
-                counte++;
-            }
-
-        }
         let average = calculateAverage(validFieldData.map(feed => feed.y));
-        
         if (average > threshold) {
             return "On";
         } else{
             return "Off";
         }
-
-        if (countl !== 0){
-            return "Off";
-        }else if (countg > counte) {
-            return "On";
-        } else {
-            return "Off";
-        }o
     }
 
     function displayDeviceStatus(status, deviceNumber) {
