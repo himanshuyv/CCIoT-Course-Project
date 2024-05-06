@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 3000; 
+    const results = 100; 
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const last5Field1Data = validField1Data.slice(-5);
             const last5Field2Data = validField2Data.slice(-5);
 
-            console.log(last5Field1Data);
-            console.log(last5Field2Data);
 
             const deviceStatus1 = determineDeviceStatus(last5Field1Data,0.15);
             const deviceStatus2 = determineDeviceStatus(last5Field2Data,0.13);
