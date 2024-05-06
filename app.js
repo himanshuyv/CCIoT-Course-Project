@@ -58,13 +58,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
         }
+        let average = calculateAverage(validFieldData.map(feed => feed.y));
+        
+        if (average > threshold) {
+            return "On";
+        } else{
+            return "Off";
+        }
+
         if (countl !== 0){
             return "Off";
         }else if (countg > counte) {
             return "On";
         } else {
             return "Off";
-        }
+        }o
     }
 
     function displayDeviceStatus(status, deviceNumber) {
