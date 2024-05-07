@@ -38,6 +38,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 determineDeviceStages(validField2Data, 0.14, 3);
             }
 
+            if (deviceStatus1 === 'Off') {
+                const stageContainer = document.getElementById(`device-stage4`);
+                if (stageContainer) {
+                    stageContainer.textContent = ``;
+                }
+            }
+
+            if (deviceStatus2 === 'Off') {
+                const stageContainer = document.getElementById(`device-stage3`);
+                if (stageContainer) {
+                    stageContainer.textContent = ``;
+                }
+            }
+
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
             plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
           })
