@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (deviceStatus2 === 'On') {
-                determineDeviceStages(validField2Data, 0.13, 3);
+                determineDeviceStages(validField2Data, 0.14, 3);
             }
 
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
