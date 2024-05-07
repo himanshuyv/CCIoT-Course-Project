@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             const deviceStatus1 = determineDeviceStatus(last5Field1Data,0.15);
-            const deviceStatus2 = determineDeviceStatus(last5Field2Data,0.13);
+            const deviceStatus2 = determineDeviceStatus(last5Field2Data,0.14);
 
             displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
