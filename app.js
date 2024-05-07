@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = 'YIBXJG6ZZ8R0PI2A';
     const channelId = '2488210';
-    const results = 100; 
+    const results = 10000; 
 
     function fetchData() {
         fetch(`https://api.thingspeak.com/channels/${channelId}/feeds.json?api_key=${apiKey}&results=${results}`)
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var trace = {
             x: data.map(feed => feed.x),
             y: data.map(feed => feed.y),
-            mode: 'lines+markers'
+            mode: 'lines'
         };
         Plotly.newPlot(containerId, [trace], layout, config);
     }
