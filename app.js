@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
             displayDeviceStatus(deviceStatus1, 4);
             displayDeviceStatus(deviceStatus2, 3);
 
+            if (deviceStatus1 === 'On') {
+                determineDeviceStages(validField1Data, 0.15, 4);
+            }
+
+            if (deviceStatus2 === 'On') {
+                determineDeviceStages(validField2Data, 0.13, 3);
+            }
+
             plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
             plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
           })
@@ -57,6 +65,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function determineDeviceStages(validFieldData, threshold, deviceNumber) {
+        let tempi = 0;
+        let last5FieldData = validFieldData.slice(-5);
+        let avg = calculateAverage(last5FieldData.map(feed => feed.y));
+        while (avg > threshold) {
+            tempi = tempi + 1;
+            last5FieldData = validFieldData.slice(-(5+tempi), -tempi);
+            avg = calculateAverage(last5FieldData.map(feed => feed.y));
+        }
+        
+        const stageContainer = document.getElementById(`device-stage${deviceNumber}`);
+        if (stageContainer) {
+            stageContainer.textContent = `Washing Machine ${deviceNumber} in use since ${parseInt((tempi*5)/60)} minutes.`;
+            stageContainer.style.color = 'green';
+        }
+        let datapoint = validFieldData.slice(tempi,100);
+        let avg1 = calculateAverage(datapoint.map(feed => feed.y));
+        while (avg1 < 1.5) {
+            tempi = tempi + 1;
+            datapoint = validFieldData.slice(-(5+tempi), -tempi);
+            avg1 = calculateAverage(datapoint.map(feed => feed.y));
+        }
+    }
 
     function plotData(data, name, containerId) {
         var layout = {
