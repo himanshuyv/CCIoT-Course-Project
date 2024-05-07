@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 determineDeviceStages(validField2Data, 0.14, 3);
             }
 
-            plotData(validField2Data.slice(-50, -1), 'Current in Washing Machine 3', 'plot-container3');
-            plotData(validField1Data.slice(-500, -1), 'Current in Washing Machine 4', 'plot-container4');
+            plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
+            plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
           })
           .catch(error => console.error('Error fetching data:', error));
     }
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             last5FieldData = validFieldData.slice(-(5+tempi), -tempi);
             avg = calculateAverage(last5FieldData.map(feed => feed.y));
         }
-        let noOfValues = 10;
+        let noOfValues = 20;
         let datapoint;
         let flagw = 0;
         let flagr = 0;
@@ -108,6 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
+        console.log(flagw, flagr, flags);
+
+
         let deviceStage = "Wash";
         if (flagr === 1){
             deviceStage = "Rinse";
