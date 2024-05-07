@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 determineDeviceStages(validField2Data, 0.14, 3);
             }
 
-            plotData(validField2Data, 'Current in Washing Machine 3', 'plot-container3');
-            plotData(validField1Data, 'Current in Washing Machine 4', 'plot-container4');
+            plotData(validField2Data.slice(-50, -1), 'Current in Washing Machine 3', 'plot-container3');
+            plotData(validField1Data.slice(-500, -1), 'Current in Washing Machine 4', 'plot-container4');
           })
           .catch(error => console.error('Error fetching data:', error));
     }
@@ -74,18 +74,53 @@ document.addEventListener('DOMContentLoaded', function() {
             last5FieldData = validFieldData.slice(-(5+tempi), -tempi);
             avg = calculateAverage(last5FieldData.map(feed => feed.y));
         }
-        
+        let noOfValues = 10;
+        let datapoint;
+        let flagw = 0;
+        let flagr = 0;
+        let flags = 0;
+        let avg1;
+        for (let i = validFieldData.length - tempi + noOfValues; i < validFieldData.length; i++) {
+            datapoint = validFieldData.slice(i-noOfValues, i);
+            datapoint.sort((a, b) => a.y - b.y);
+            let dataLength = datapoint.length;
+            let startIndex = Math.floor(dataLength * 0.2);
+            let endIndex = Math.floor(dataLength * 0.8);
+            let data = datapoint.slice(startIndex, endIndex);
+            avg1 = calculateAverage(data.map(feed => feed.y));
+            if (avg1 > 2 ) {
+                flagw = 1;
+            }
+
+            if (avg1 < 0.5) {
+                if (flagw === 1) {
+                    flagr = 1;
+                }
+            }
+            if (avg1 > 2) {
+                if (flagr === 1) {
+                    flags = 1;
+                }
+            }
+            if (flags === 1){
+                if (avg1 < 1) {
+                    flags = 0;
+                }
+            }
+        }
+        let deviceStage = "Wash";
+        if (flagr === 1){
+            deviceStage = "Rinse";
+        }
+        if (flags === 1){
+            deviceStage = "Spin";
+        }
+         
+
         const stageContainer = document.getElementById(`device-stage${deviceNumber}`);
         if (stageContainer) {
-            stageContainer.textContent = `Washing Machine ${deviceNumber} in use since ${parseInt((tempi*5)/60)} minutes.`;
-            stageContainer.style.color = 'green';
-        }
-        let datapoint = validFieldData.slice(tempi,100);
-        let avg1 = calculateAverage(datapoint.map(feed => feed.y));
-        while (avg1 < 1.5) {
-            tempi = tempi + 1;
-            datapoint = validFieldData.slice(-(5+tempi), -tempi);
-            avg1 = calculateAverage(datapoint.map(feed => feed.y));
+            stageContainer.textContent = `Washing Machine ${deviceNumber} Stage: ${deviceStage}`;
+            stageContainer.style.color = deviceStage === 'Wash' ? 'blue' : deviceStage === 'Rinse' ? 'yellow' : 'purple';
         }
     }
 

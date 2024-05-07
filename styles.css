@@ -31,6 +31,10 @@ h1 {
   font-size: 1.5rem;
 }
 
+.device-stage{
+  font-size: 1.4rem;
+}
+
 .device-status:nth-child(even) {
   margin-left: auto;
 }
