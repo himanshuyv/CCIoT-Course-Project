@@ -23,11 +23,11 @@ def read_last_n_entries(csv_file, n):
     
     return data
 
-csv_file_path = './data2.csv'
-last_30000_entries = read_last_n_entries(csv_file_path, 30000)
+csv_file_path = './data.csv'
+last_300000_entries = read_last_n_entries(csv_file_path, 1000000)
 
 
-for entry in last_30000_entries:
+for entry in last_300000_entries:
     del entry['latitude']
     del entry['longitude']
     del entry['elevation']
@@ -37,7 +37,7 @@ for entry in last_30000_entries:
 field1_data = []
 field2_data = []
 
-for entry in last_30000_entries:
+for entry in last_300000_entries:
     if entry['field1'] == '':
         field2_data.append(entry)
     elif entry['field2'] == '':
